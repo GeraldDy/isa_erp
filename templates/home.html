@@ -1,0 +1,81 @@
+{% extends "layouts/base.html" %}
+
+{% block content %}
+
+<!-- Stats Cards -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+        <div class="flex items-center justify-between">
+            <p class="text-sm text-gray-500 font-medium">Total Sales</p>
+            <i class="fa-solid fa-users text-gray-400 text-xl"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-gray-800 mt-4">120</h2>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+        <div class="flex items-center justify-between">
+            <p class="text-sm text-gray-500 font-medium">Sales Today</p>
+            <i class="fa-solid fa-user-check text-green-500 text-xl"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-green-600 mt-4">98</h2>
+    </div>
+
+    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+        <div class="flex items-center justify-between">
+            <p class="text-sm text-gray-500 font-medium">Orders Pending</p>
+            <i class="fa-solid fa-user-times text-red-500 text-xl"></i>
+        </div>
+        <h2 class="text-3xl font-bold text-red-500 mt-4">22</h2>
+    </div>
+
+</div>
+
+<!-- Recent Activity Table -->
+<div class="bg-white rounded-xl shadow p-6">
+
+    <h3 class="text-lg font-semibold mb-4 text-gray-800">Recent Activity</h3>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-sm text-left border-collapse">
+            <thead class="text-gray-500 border-b">
+                <tr>
+                    <th class="py-3 px-4 font-medium">Name</th>
+                    <th class="py-3 px-4 font-medium">Status</th>
+                    <th class="py-3 px-4 font-medium">Date</th>
+                </tr>
+            </thead>
+            <tbody class="text-gray-700">
+                <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="py-3 px-4">Juan Dela Cruz</td>
+                    <td>
+                        <span
+                            class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">Present</span>
+                    </td>
+                    <td class="py-3 px-4">Feb 22, 2026</td>
+                </tr>
+
+                <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="py-3 px-4">Maria Santos</td>
+                    <td>
+                        <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-semibold">Absent</span>
+                    </td>
+                    <td class="py-3 px-4">Feb 22, 2026</td>
+                </tr>
+
+                <tr class="border-b hover:bg-gray-50 transition">
+                    <td class="py-3 px-4">Carlos Reyes</td>
+                    <td>
+                        <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-semibold">On
+                            Leave</span>
+                    </td>
+                    <td class="py-3 px-4">Feb 22, 2026</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+{% endblock %}
