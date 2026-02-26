@@ -1,0 +1,44 @@
+{% extends "layouts/base.html" %}
+
+{% block page_title %}
+Customer Details
+{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-xl shadow-sm ring-1 ring-slate-200/70 p-5 mb-6">
+    <div class="flex items-center justify-between">
+        <div>
+            <h2 class="text-2xl font-semibold text-slate-900">{{ customer.registered_name }}</h2>
+            <p class="text-sm text-slate-700">{{ customer.email_address }}</p>
+        </div>
+        <div class="space-x-2">
+            <a href="{% url 'customer_update' customer.pk %}"
+                class="px-4 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition">Edit</a>
+            <a href="{% url 'customer_delete' customer.pk %}"
+                class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition">Delete</a>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl shadow-sm ring-1 ring-slate-200/70 p-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+        <div>
+            <p class="text-slate-600">TIN Number</p>
+            <p class="font-medium text-slate-900">{{ customer.tin_number|default:"-" }}</p>
+        </div>
+        <div>
+            <p class="text-slate-600">Mobile/Tel Number</p>
+            <p class="font-medium text-slate-900">{{ customer.mobile_tel_number }}</p>
+        </div>
+    </div>
+
+    <div class="mt-6">
+        <p class="text-slate-600 text-sm mb-2">Business Address</p>
+        <p class="text-slate-900">{{ customer.business_address }}</p>
+    </div>
+</div>
+
+<div class="mt-6">
+    <a href="{% url 'customer_list' %}" class="text-slate-800 hover:underline">Back to Customers</a>
+</div>
+{% endblock %}

@@ -1,0 +1,103 @@
+{% extends "layouts/base.html" %}
+
+{% block page_title %}
+Products
+{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm ring-brand-slate p-5 text-brand-ink">
+    <div class="flex items-center justify-between gap-4">
+        <div>
+            
+            <p class="text-sm text-brand-dark">Manage your inventory products.</p>
+        </div>
+        <div class="flex items-center gap-2">
+            <div class="hidden sm:flex items-center gap-2 rounded-lg bg-white px-3 py-2 ring-brand-slate">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 1010.5 3a7.5 7.5 0 006.15 13.65z" />
+                </svg>
+                <span class="text-xs text-brand-dark">Search products…</span>
+            </div>
+            <a href="{% url 'product_create' %}" class="px-4 py-2 rounded-lg btn-brand transition">
+                Add Product
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="bg-white rounded-2xl shadow-sm ring-brand-slate overflow-hidden text-brand-ink">
+    <div class="px-4 py-3 border-b border-slate-100 bg-brand-dust/40">
+        <div class="flex flex-wrap items-center gap-3 text-xs text-brand-dark">
+            <span class="font-medium text-brand-ink">Showing</span>
+            <span class="px-2 py-1 rounded-full bg-white ring-brand-slate text-brand-ink">All Products</span>
+            <span class="px-2 py-1 rounded-full bg-white ring-brand-slate text-brand-ink">Active</span>
+            <span class="ml-auto text-brand-dark">Last updated just now</span>
+        </div>
+    </div>
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-sm text-brand-ink">
+            <thead class="bg-white text-brand-ink">
+                <tr>
+                    <th class="text-left px-4 py-3 font-semibold">Product</th>
+                    <th class="text-left px-4 py-3 font-semibold">Product ID</th>
+                    <th class="text-left px-4 py-3 font-semibold">Brand</th>
+                    <th class="text-left px-4 py-3 font-semibold">Price</th>
+                    <th class="text-left px-4 py-3 font-semibold">Qty</th>
+                    <th class="text-left px-4 py-3 font-semibold">Status</th>
+                    <th class="text-right px-4 py-3 font-semibold">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-brand-ink">
+                {% for product in products %}
+                <tr class="hover:bg-brand-dust/40">
+                    <td class="px-4 py-3">
+                        <div class="flex items-center gap-3">
+                            <!-- <div
+                                class="w-9 h-9 rounded-lg bg-brand-dark text-white flex items-center justify-center text-xs font-semibold">
+                                {{ product.product_name|slice:":2"|upper }}
+                            </div> -->
+                            <div>
+                                <p class="font-semibold text-brand-ink">{{ product.product_name }}</p>
+                                <p class="text-xs text-brand-dark">UoM: {{ product.unit_of_measure }}</p>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="px-4 py-3 text-brand-dark">{{ product.product_id|default:"-" }}</td>
+                    <td class="px-4 py-3 text-brand-dark">{{ product.brand }}</td>
+                    <td class="px-4 py-3 text-brand-dark">{{ product.price }}</td>
+                    <td class="px-4 py-3 text-brand-dark">{{ product.quantity }}</td>
+                    <td class="px-4 py-3">
+                        <span
+                            class="px-2.5 py-1 rounded-full text-xs font-semibold {% if product.status == 'active' %}bg-emerald-100 text-emerald-800{% else %}bg-gray-100 text-brand-ink{% endif %}">
+                            {{ product.status|title }}
+                        </span>
+                    </td>
+                    <td class="px-4 py-3 text-right">
+                        <div class="inline-flex items-center gap-2">
+                            <a href="{% url 'product_detail' product.pk %}"
+                                class="px-3 py-1.5 rounded-lg btn-outline-brand transition">
+                                View
+                            </a>
+                            <a href="{% url 'product_update' product.pk %}"
+                                class="px-3 py-1.5 rounded-lg btn-brand-dark transition">
+                                Edit
+                            </a>
+                            <a href="{% url 'product_delete' product.pk %}"
+                                class="px-3 py-1.5 rounded-lg btn-brand-dark transition">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="px-4 py-8 text-center !text-slate-800" colspan="7">No products found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,99 @@
+{% extends "layouts/base.html" %}
+
+{% block page_title %}
+{{ title }}
+{% endblock %}
+
+{% block content %}
+<div class="bg-white rounded-2xl shadow-sm ring-brand-slate p-5 text-brand-ink">
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <h2 class="text-xl font-bold mt-4">Order Items</h2>
+        {{ formset.management_form }}
+        <div id="item-forms">
+            {% for item_form in formset %}
+            <div class="item-form">
+                {{ item_form.as_p }}
+            </div>
+            {% endfor %}
+        </div>
+        <button type="button" id="add-item-form" class="px-4 py-2 rounded-lg btn-outline-brand transition">
+            Add another item
+        </button>
+        <br><br>
+
+        <button type="submit" class="px-4 py-2 rounded-lg btn-brand transition">
+            Save
+        </button>
+    </form>
+</div>
+
+<div class="bg-white rounded-2xl shadow-sm ring-brand-slate overflow-hidden text-brand-ink mt-6">
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-sm text-brand-ink">
+            <thead class="bg-white text-brand-ink">
+                <tr>
+                    <th class="text-left px-4 py-3 font-semibold">Order ID</th>
+                    <th class="text-left px-4 py-3 font-semibold">Customer</th>
+                    <th class="text-left px-4 py-3 font-semibold">Order Date</th>
+                    <th class="text-left px-4 py-3 font-semibold">Total Amount</th>
+                    <th class="text-right px-4 py-3 font-semibold">Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-brand-ink">
+                {% for order in orders %}
+                <tr class="hover:bg-brand-dust/40">
+                    <td class="px-4 py-3">
+                        <p class="font-semibold text-brand-ink">{{ order.id }}</p>
+                    </td>
+                    <td class="px-4 py-3 text-brand-dark">{{ order.customer.registered_name }}</td>
+                    <td class="px-4 py-3 text-brand-dark">{{ order.order_date }}</td>
+                    <td class="px-4 py-3 text-brand-dark">{{ order.total_amount }}</td>
+                    <td class="px-4 py-3 text-right">
+                        <div class="inline-flex items-center gap-2">
+                            <a href="{% url 'order_detail' order.pk %}"
+                                class="px-3 py-1.5 rounded-lg btn-outline-brand transition">
+                                View
+                            </a>
+                            <a href="{% url 'order_update' order.pk %}"
+                                class="px-3 py-1.5 rounded-lg btn-brand-dark transition">
+                                Edit
+                            </a>
+                            <a href="{% url 'order_delete' order.pk %}"
+                                class="px-3 py-1.5 rounded-lg btn-brand-dark transition">
+                                Delete
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td class="px-4 py-8 text-center !text-slate-800" colspan="5">No orders found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% block scripts %}
+<script>
+    $(document).ready(function() {
+        // Add item form
+        $('#add-item-form').click(function() {
+            var form_idx = $('#id_items-TOTAL_FORMS').val();
+            $('#item-forms').append($('#empty-form').html().replace(/__prefix__/g, form_idx));
+            $('#id_items-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        });
+    });
+</script>
+
+<div id="empty-form" style="display:none">
+    <div class="item-form">
+        {{ formset.empty_form.as_p }}
+    </div>
+</div>
+{% endblock %}
+{% endblock %}
