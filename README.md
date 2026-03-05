@@ -4,6 +4,7 @@ A modern **ERP (Enterprise Resource Planning) Web Application** built with:
 
 * Django (Backend)
 * Tailwind CSS + DaisyUI (Frontend)
+* `django-widget-tweaks` for form styling
 * Modular Architecture (Inventory & Sales)
 
 ---
@@ -44,10 +45,9 @@ isa_erp/
 │   └── settings.py
 │
 ├── templates/
-│   └── layout/
+│   └── layouts/
 │       └── base.html
 │
-├── theme/
 ├── main_app/
 └── static/
 ```
@@ -58,8 +58,6 @@ isa_erp/
 
 * Python 3.10+
 * pip
-* Node.js (LTS recommended)
-* npm
 
 ---
 
@@ -104,37 +102,7 @@ pip install -r requirements.txt
 
 ---
 
-## 4. Install Node.js Dependencies
-
-Check installation:
-
-```
-node -v
-npm -v
-```
-
-Download if needed:
-https://nodejs.org
-
----
-
-## 5. Configure Tailwind
-
-If npm is not detected, add in `settings.py`:
-
-```
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
-```
-
-Then run:
-
-```
-python manage.py tailwind install
-```
-
----
-
-## 6. Apply Database Migrations
+## 4. Apply Database Migrations
 
 ```
 python manage.py migrate
@@ -142,7 +110,7 @@ python manage.py migrate
 
 ---
 
-## 7. Create Superuser (Optional)
+## 5. Create Superuser (Optional)
 
 ```
 python manage.py createsuperuser
@@ -179,19 +147,19 @@ http://127.0.0.1:8000/
 ## Top Navbar
 
 * Page title
-* User section
+* User section with a dropdown menu
 
 ## Responsive Design
 
-* Built with Tailwind CSS
-* Clean layout
+* Built with Tailwind CSS and DaisyUI
+* Clean, modern, and light-themed layout
 
 ---
 
 # Authentication
 
 * Django built-in authentication
-* Logout button in sidebar
+* Logout button in the user dropdown menu
 * CSRF protection enabled
 
 ---
@@ -201,47 +169,6 @@ http://127.0.0.1:8000/
 * Add new modules (HR, Accounting)
 * Implement role-based access
 * Integrate APIs
-* Upgrade frontend to React
-
----
-
-# Common Issues & Fixes
-
-## Tailwind Install Error
-
-```
-NPM_BIN_PATH = r"C:\Program Files\nodejs\npm.cmd"
-```
-
----
-
-## TemplateDoesNotExist
-
-```
-TEMPLATES = [
-    {
-        'DIRS': [BASE_DIR / "templates"],
-    },
-]
-```
-
----
-
-## Static Files Not Loading
-
-```
-python manage.py collectstatic
-```
-
----
-
-# Future Improvements
-
-* Dashboard analytics
-* Notifications
-* Mobile responsiveness
-* Role-based access control
-* React frontend integration
 
 ---
 

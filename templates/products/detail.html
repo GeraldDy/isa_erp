@@ -1,56 +1,59 @@
 {% extends "layouts/base.html" %}
 
+{% block page_title %}
+Product Details
+{% endblock %}
+
 {% block content %}
-<div class="bg-white rounded-xl shadow-sm ring-1 ring-slate-200/70 p-5 mb-6">
-    <div class="flex items-center justify-between">
+<div class="flex justify-between items-center mb-6">
+    <div>
+        <h1 class="text-2xl font-semibold">{{ product.product_name }}</h1>
+        <p class="text-gray-500">{{ product.product_id|default:"No Product ID" }}</p>
+    </div>
+    <div class="flex items-center gap-2">
+        <a href="{% url 'product_update' product.pk %}" class="btn btn-warning">Edit</a>
+        <a href="{% url 'product_delete' product.pk %}" class="btn btn-error">Delete</a>
+    </div>
+</div>
+
+<div class="bg-white rounded-xl shadow-md p-6">
+    <h2 class="text-lg font-semibold mb-4">Product Information</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div>
-            <h2 class="text-2xl font-semibold text-slate-900">{{ product.product_name }}</h2>
-            <p class="text-sm text-slate-700">{{ product.product_id|default:"No Product ID" }}</p>
+            <p class="text-gray-500">Brand</p>
+            <p class="font-medium text-gray-800">{{ product.brand }}</p>
         </div>
-        <div class="space-x-2">
-            <a href="{% url 'product_update' product.pk %}"
-                class="px-4 py-2 rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition">Edit</a>
-            <a href="{% url 'product_delete' product.pk %}"
-                class="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition">Delete</a>
+        <div>
+            <p class="text-gray-500">Unit of Measure</p>
+            <p class="font-medium text-gray-800">{{ product.unit_of_measure }}</p>
+        </div>
+        <div>
+            <p class="text-gray-500">Price</p>
+            <p class="font-medium text-gray-800">{{ product.price }}</p>
+        </div>
+        <div>
+            <p class="text-gray-500">Selling Price</p>
+            <p class="font-medium text-gray-800">{{ product.selling_price }}</p>
+        </div>
+        <div>
+            <p class="text-gray-500">Quantity</p>
+            <p class="font-medium text-gray-800">{{ product.quantity }}</p>
+        </div>
+        <div>
+            <p class="text-gray-500">Status</p>
+            <span class="badge {% if product.status == 'active' %}badge-success{% else %}badge-ghost{% endif %}">{{ product.status|title }}</span>
+        </div>
+        <div class="md:col-span-2">
+            <p class="text-gray-500">Description</p>
+            <p class="font-medium text-gray-800">{{ product.product_description }}</p>
         </div>
     </div>
 </div>
 
-<div class="bg-white rounded-xl shadow-sm ring-1 ring-slate-200/70 p-6">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
-        <div>
-            <p class="text-slate-600">Brand</p>
-            <p class="font-medium text-slate-900">{{ product.brand }}</p>
-        </div>
-        <div>
-            <p class="text-slate-600">Unit of Measure</p>
-            <p class="font-medium text-slate-900">{{ product.unit_of_measure }}</p>
-        </div>
-        <div>
-            <p class="text-slate-600">Price</p>
-            <p class="font-medium text-slate-900">{{ product.price }}</p>
-        </div>
-        <div>
-            <p class="text-slate-600">Selling Price</p>
-            <p class="font-medium text-slate-900">{{ product.selling_price }}</p>
-        </div>
-        <div>
-            <p class="text-slate-600">Quantity</p>
-            <p class="font-medium text-slate-900">{{ product.quantity }}</p>
-        </div>
-        <div>
-            <p class="text-slate-600">Status</p>
-            <p class="font-medium text-slate-900">{{ product.status|title }}</p>
-        </div>
-    </div>
-
-    <div class="mt-6">
-        <p class="text-slate-600 text-sm mb-2">Description</p>
-        <p class="text-slate-900">{{ product.product_description }}</p>
-    </div>
-</div>
-
-<div class="mt-6">
-    <a href="{% url 'product_list' %}" class="text-slate-800 hover:underline">Back to Products</a>
+<div class="mt-8">
+    <a href="{% url 'product_list' %}" class="btn btn-outline">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" /></svg>
+        Back to Products
+    </a>
 </div>
 {% endblock %}

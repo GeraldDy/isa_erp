@@ -1,99 +1,123 @@
 {% extends "layouts/base.html" %}
+{% load widget_tweaks %}
 
 {% block page_title %}
 {{ title }}
 {% endblock %}
 
 {% block content %}
-<div class="bg-white rounded-2xl shadow-sm ring-brand-slate p-5 text-brand-ink">
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+<div>
+    <div class="mb-6">
+        <h1 class="text-2xl font-semibold">{{ title }}</h1>
+        <p class="text-gray-500">Fill out the order information below.</p>
+    </div>
 
-        <h2 class="text-xl font-bold mt-4">Order Items</h2>
-        {{ formset.management_form }}
-        <div id="item-forms">
-            {% for item_form in formset %}
-            <div class="item-form">
-                {{ item_form.as_p }}
+    <form method="POST" enctype="multipart/form-data" class="bg-white rounded-xl shadow-md p-6">
+        {% csrf_token %}
+
+        {% if form.non_field_errors %}
+        <div class="alert alert-error shadow-sm mb-4">
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                <span>{{ form.non_field_errors|striptags }}</span>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {% for field in form %}
+            <div class="form-control">
+                <label class="label" for="{{ field.id_for_label }}">
+                    <span class="label-text">{{ field.label }}</span>
+                </label>
+                {% render_field field class="input input-bordered w-full" %}
+                {% if field.help_text %}
+                <label class="label">
+                    <span class="label-text-alt">{{ field.help_text }}</span>
+                </label>
+                {% endif %}
+                {% if field.errors %}
+                 <label class="label">
+                    <span class="label-text-alt text-red-500">{{ field.errors|striptags }}</span>
+                </label>
+                {% endif %}
             </div>
             {% endfor %}
         </div>
-        <button type="button" id="add-item-form" class="px-4 py-2 rounded-lg btn-outline-brand transition">
+        
+        <div class="divider mt-8">Order Items</div>
+
+        {{ formset.management_form }}
+        <div id="item-forms" class="space-y-6">
+            {% for item_form in formset %}
+            <div class="p-4 border border-gray-200 rounded-lg item-form">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {% for field in item_form %}
+                    <div class="form-control">
+                        <label class="label" for="{{ field.id_for_label }}">
+                            <span class="label-text">{{ field.label }}</span>
+                        </label>
+                        {% render_field field class="input input-bordered w-full" %}
+                        {% if field.errors %}
+                         <label class="label">
+                            <span class="label-text-alt text-red-500">{{ field.errors|striptags }}</span>
+                        </label>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div id="empty-form" class="hidden">
+            <div class="p-4 border border-gray-200 rounded-lg item-form">
+                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {% for field in formset.empty_form %}
+                     <div class="form-control">
+                        <label class="label" for="{{ field.id_for_label }}">
+                            <span class="label-text">{{ field.label }}</span>
+                        </label>
+                        {% render_field field class="input input-bordered w-full" %}
+                        {% if field.errors %}
+                         <label class="label">
+                            <span class="label-text-alt text-red-500">{{ field.errors|striptags }}</span>
+                        </label>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <button type="button" id="add-item-form" class="btn btn-outline btn-primary mt-4">
             Add another item
         </button>
-        <br><br>
 
-        <button type="submit" class="px-4 py-2 rounded-lg btn-brand transition">
-            Save
-        </button>
+        <div class="mt-8 flex items-center gap-4">
+            <button type="submit" class="btn btn-primary">
+                Save Order
+            </button>
+            <a href="{% if object %}{% url 'order_detail' object.pk %}{% else %}{% url 'order_list' %}{% endif %}" class="btn btn-ghost">Cancel</a>
+        </div>
     </form>
 </div>
-
-<div class="bg-white rounded-2xl shadow-sm ring-brand-slate overflow-hidden text-brand-ink mt-6">
-    <div class="overflow-x-auto">
-        <table class="min-w-full text-sm text-brand-ink">
-            <thead class="bg-white text-brand-ink">
-                <tr>
-                    <th class="text-left px-4 py-3 font-semibold">Order ID</th>
-                    <th class="text-left px-4 py-3 font-semibold">Customer</th>
-                    <th class="text-left px-4 py-3 font-semibold">Order Date</th>
-                    <th class="text-left px-4 py-3 font-semibold">Total Amount</th>
-                    <th class="text-right px-4 py-3 font-semibold">Actions</th>
-                </tr>
-            </thead>
-            <tbody class="divide-y divide-slate-100 text-brand-ink">
-                {% for order in orders %}
-                <tr class="hover:bg-brand-dust/40">
-                    <td class="px-4 py-3">
-                        <p class="font-semibold text-brand-ink">{{ order.id }}</p>
-                    </td>
-                    <td class="px-4 py-3 text-brand-dark">{{ order.customer.registered_name }}</td>
-                    <td class="px-4 py-3 text-brand-dark">{{ order.order_date }}</td>
-                    <td class="px-4 py-3 text-brand-dark">{{ order.total_amount }}</td>
-                    <td class="px-4 py-3 text-right">
-                        <div class="inline-flex items-center gap-2">
-                            <a href="{% url 'order_detail' order.pk %}"
-                                class="px-3 py-1.5 rounded-lg btn-outline-brand transition">
-                                View
-                            </a>
-                            <a href="{% url 'order_update' order.pk %}"
-                                class="px-3 py-1.5 rounded-lg btn-brand-dark transition">
-                                Edit
-                            </a>
-                            <a href="{% url 'order_delete' order.pk %}"
-                                class="px-3 py-1.5 rounded-lg btn-brand-dark transition">
-                                Delete
-                            </a>
-                        </div>
-                    </td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td class="px-4 py-8 text-center !text-slate-800" colspan="5">No orders found.</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-</div>
+{% endblock %}
 
 {% block scripts %}
 <script>
-    $(document).ready(function() {
-        // Add item form
-        $('#add-item-form').click(function() {
-            var form_idx = $('#id_items-TOTAL_FORMS').val();
-            $('#item-forms').append($('#empty-form').html().replace(/__prefix__/g, form_idx));
-            $('#id_items-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+    document.addEventListener('DOMContentLoaded', function() {
+        const addItemBtn = document.getElementById('add-item-form');
+        const itemForms = document.getElementById('item-forms');
+        const emptyForm = document.getElementById('empty-form').innerHTML;
+        const totalForms = document.getElementById('id_items-TOTAL_FORMS');
+
+        addItemBtn.addEventListener('click', function() {
+            let formIdx = parseInt(totalForms.value);
+            let newForm = emptyForm.replace(/__prefix__/g, formIdx);
+            itemForms.insertAdjacentHTML('beforeend', newForm);
+            totalForms.value = formIdx + 1;
         });
     });
 </script>
-
-<div id="empty-form" style="display:none">
-    <div class="item-form">
-        {{ formset.empty_form.as_p }}
-    </div>
-</div>
-{% endblock %}
 {% endblock %}

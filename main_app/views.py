@@ -46,8 +46,16 @@ def dashboard_view(request):
 
 @login_required(login_url="login")
 def product_list(request):
+    if request.method == "POST":
+        form = ProductForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("product_list")
+    else:
+        form = ProductForm()
+
     products = Product.objects.all().order_by("-created_at")
-    return render(request, "products/list.html", {"products": products})
+    return render(request, "products/list.html", {"products": products, "form": form})
 
 
 @login_required(login_url="login")
@@ -107,7 +115,7 @@ def customer_detail(request, pk):
 def customer_create(request):
     if request.method == "POST":
         form = CustomerForm(request.POST)
-        if form.is_.is_valid():
+        if form.is_valid():
             form.save()
             return redirect("customer_list")
     else:

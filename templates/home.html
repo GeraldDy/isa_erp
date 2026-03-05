@@ -7,73 +7,105 @@ Dashboard
 {% block content %}
 
 <!-- Stats Cards -->
-<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
 
-    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+    <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer">
         <div class="flex items-center justify-between">
-            <p class="text-sm text-gray-500 font-medium">Total Sales</p>
-            <i class="fa-solid fa-users text-gray-400 text-xl"></i>
+            <div>
+                <p class="text-sm text-gray-500 font-medium">Total Sales</p>
+                <h2 class="text-3xl font-bold text-gray-800 mt-2">120</h2>
+            </div>
+            <div class="bg-blue-500 p-3 rounded-full text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z" /></svg>
+            </div>
         </div>
-        <h2 class="text-3xl font-bold text-gray-800 mt-4">120</h2>
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+    <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer">
         <div class="flex items-center justify-between">
-            <p class="text-sm text-gray-500 font-medium">Sales Today</p>
-            <i class="fa-solid fa-user-check text-green-500 text-xl"></i>
+            <div>
+                <p class="text-sm text-gray-500 font-medium">Sales Today</p>
+                <h2 class="text-3xl font-bold text-green-600 mt-2">98</h2>
+            </div>
+            <div class="bg-green-500 p-3 rounded-full text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v.01" /></svg>
+            </div>
         </div>
-        <h2 class="text-3xl font-bold text-green-600 mt-4">98</h2>
     </div>
 
-    <div class="bg-white p-6 rounded-xl shadow hover:shadow-lg transition cursor-pointer">
+    <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer">
         <div class="flex items-center justify-between">
-            <p class="text-sm text-gray-500 font-medium">Orders Pending</p>
-            <i class="fa-solid fa-user-times text-red-500 text-xl"></i>
+            <div>
+                <p class="text-sm text-gray-500 font-medium">Orders Pending</p>
+                <h2 class="text-3xl font-bold text-red-500 mt-2">22</h2>
+            </div>
+            <div class="bg-red-500 p-3 rounded-full text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
         </div>
-        <h2 class="text-3xl font-bold text-red-500 mt-4">22</h2>
+    </div>
+    
+    <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-shadow cursor-pointer">
+        <div class="flex items-center justify-between">
+            <div>
+                <p class="text-sm text-gray-500 font-medium">New Customers</p>
+                <h2 class="text-3xl font-bold text-indigo-600 mt-2">15</h2>
+            </div>
+            <div class="bg-indigo-500 p-3 rounded-full text-white">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" /></svg>
+            </div>
+        </div>
     </div>
 
 </div>
 
 <!-- Recent Activity Table -->
-<div class="bg-white rounded-xl shadow p-6">
+<div class="bg-white rounded-xl shadow-md p-6">
 
     <h3 class="text-lg font-semibold mb-4 text-gray-800">Recent Activity</h3>
 
     <div class="overflow-x-auto">
-        <table class="w-full text-sm text-left border-collapse">
-            <thead class="text-gray-500 border-b">
+        <table class="w-full text-sm text-left">
+            <thead class="text-gray-500 border-b border-gray-200">
                 <tr>
                     <th class="py-3 px-4 font-medium">Name</th>
                     <th class="py-3 px-4 font-medium">Status</th>
                     <th class="py-3 px-4 font-medium">Date</th>
+                    <th class="py-3 px-4 font-medium"></th>
                 </tr>
             </thead>
             <tbody class="text-gray-700">
-                <tr class="border-b hover:bg-gray-50 transition">
+                <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                     <td class="py-3 px-4">Juan Dela Cruz</td>
                     <td>
-                        <span
-                            class="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-semibold">Present</span>
+                        <span class="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-semibold">Completed</span>
                     </td>
                     <td class="py-3 px-4">Feb 22, 2026</td>
+                    <td class="py-3 px-4 text-right">
+                        <a href="#" class="text-indigo-600 hover:underline">View</a>
+                    </td>
                 </tr>
 
-                <tr class="border-b hover:bg-gray-50 transition">
+                <tr class="border-b border-gray-200 hover:bg-gray-50 transition">
                     <td class="py-3 px-4">Maria Santos</td>
                     <td>
-                        <span class="bg-red-100 text-red-700 px-2 py-1 rounded-full text-xs font-semibold">Absent</span>
+                        <span class="bg-red-100 text-red-700 px-3 py-1 rounded-full text-xs font-semibold">Cancelled</span>
                     </td>
                     <td class="py-3 px-4">Feb 22, 2026</td>
+                     <td class="py-3 px-4 text-right">
+                        <a href="#" class="text-indigo-600 hover:underline">View</a>
+                    </td>
                 </tr>
 
-                <tr class="border-b hover:bg-gray-50 transition">
+                <tr class="hover:bg-gray-50 transition">
                     <td class="py-3 px-4">Carlos Reyes</td>
                     <td>
-                        <span class="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-semibold">On
-                            Leave</span>
+                        <span class="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full text-xs font-semibold">Processing</span>
                     </td>
                     <td class="py-3 px-4">Feb 22, 2026</td>
+                     <td class="py-3 px-4 text-right">
+                        <a href="#" class="text-indigo-600 hover:underline">View</a>
+                    </td>
                 </tr>
 
             </tbody>
